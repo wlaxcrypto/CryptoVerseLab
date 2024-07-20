@@ -1,0 +1,43 @@
+# scripts/data_query.py
+
+import requests
+
+def fetch_market_data(api_url, params):
+    """
+    Fetch market data from the API.
+
+    :param api_url: API endpoint URL
+    :param params: Parameters for the API request
+    :return: JSON response from the API
+    """
+    response = requests.get(api_url, params=params)
+    response.raise_for_status()
+    return response.json()
+
+def get_historical_data(api_url, symbol, start_date, end_date):
+    """
+    Get historical market data for a specific cryptocurrency.
+
+    :param api_url: API endpoint URL
+    :param symbol: Cryptocurrency symbol (e.g., 'BTC-USD')
+    :param start_date: Start date for the historical data (YYYY-MM-DD)
+    :param end_date: End date for the historical data (YYYY-MM-DD)
+    :return: Historical market data
+    """
+    params = {
+        'symbol': symbol,
+        'start_date': start_date,
+        'end_date': end_date
+    }
+    return fetch_market_data(api_url, params)
+
+def get_real_time_data(api_url, symbol):
+    """
+    Get real-time market data for a specific cryptocurrency.
+
+    :param api_url: API endpoint URL
+    :param symbol: Cryptocurrency symbol (e.g., 'BTC-USD')
+    :return: Real-time market data
+    """
+    params = {'symbol': symbol}
+    return fetch_market_data(api_url, params)
